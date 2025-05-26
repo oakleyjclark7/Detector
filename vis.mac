@@ -1,0 +1,69 @@
+# Use this open statement to create an OpenGL view:
+/vis/open OGL 1920x1080-0+0
+
+# Disable auto refresh and quieten vis messages whilst scene and
+# trajectories are established:
+/vis/viewer/set/autoRefresh true
+/vis/verbose errors
+
+# Draw geometry:
+/vis/drawVolume
+
+# Specify view angle:
+/vis/viewer/set/viewpointThetaPhi 45 30
+/vis/viewer/set/lightsVector 1 0.5 0
+
+# Include the world origin
+/vis/geometry/set/visibility World_Origin 1 true
+
+# Specify style (surface, wireframe, auxiliary edges,...)
+/vis/viewer/set/style surface
+/vis/viewer/set/auxiliaryEdge true
+/vis/viewer/set/lineSegmentsPerCircle 100
+
+# Draw smooth trajectories at end of event, showing trajectory points
+# as markers 2 pixels wide:
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByCharge
+/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts false
+/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 1
+# (if too many tracks cause core dump => /tracking/storeTrajectory 0)
+
+# Many other options are available with /vis/modeling and /vis/filtering.
+# For example, to select colour by particle ID:
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/default/setDrawStepPts true
+# To select or override default colours (note: e+ is blue by default):
+/vis/modeling/trajectories/list
+/vis/modeling/trajectories/drawByParticleID-0/set e+ blue
+
+# To superimpose all of the events from a given run:
+/vis/scene/endOfEventAction accumulate
+
+# Axes, scale, etc.
+/vis/scene/add/axes 0.0 0.0 0.0 1.0 # Simple axes: x=red, y=green, z=blue.
+/vis/scene/add/eventID # Drawn at end of event
+/vis/scene/add/date    # Date stamp
+
+# Add labels for the detector and beam
+/vis/scene/add/text 0 0.05 0.1 m 24 0 0 HEXITEC
+/vis/scene/add/text 0 0.05 -1.05 m 24 0 0 BEAM
+
+# Frame
+/vis/set/colour white
+/vis/set/lineWidth 2
+/vis/scene/add/frame   # Simple frame around the view
+
+# To get nice view
+/vis/geometry/set/forceWireframe World 0 true
+/vis/viewer/set/style surface
+/vis/viewer/set/hiddenMarker true
+/vis/viewer/set/targetPoint 0.0 0.0 -0.5 m
+/vis/viewer/zoomTo 3.5
+
+# Setup colours
+/vis/geometry/set/colour HEXITEC 0.5 0.5 0.5 1.0 # grey
+
+# Re-establish auto refreshing and verbosity:
+/vis/viewer/set/autoRefresh true
+/vis/verbose warnings

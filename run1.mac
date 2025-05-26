@@ -1,0 +1,28 @@
+/process/em/fluo true
+/process/em/auger true
+
+/run/initialize
+
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+
+# Use the energy spectrum from spekpy
+/gps/particle gamma
+/gps/ene/type User
+/gps/hist/type energy
+/control/execute tube_output_spekpy.mac
+
+# CONE BEAM
+# Beam 1m from the detector, hitting the full face of it
+/gps/ang/type iso
+/gps/position 0.0 0.0 -100.0 cm
+/gps/ang/mintheta 89.42706 deg
+/gps/ang/maxtheta 90.57294 deg
+/gps/ang/minphi 179.42706 deg
+/gps/ang/maxphi 180.57294 deg
+/gps/ang/rot1 0 0 1
+/gps/ang/rot2 0 -1 0
+
+/run/beamOn 10000
